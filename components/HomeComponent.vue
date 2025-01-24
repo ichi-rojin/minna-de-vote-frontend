@@ -223,4 +223,6 @@
 import ListProvider from "@/providers/list/ListProvider.vue";
 import InjectedTopDisplay from "@/providers/list/InjectedTopDisplay.vue";
 import InjectedFetch from "@/providers/list/InjectedFetch.vue";
+import ElectionProvider from "@/providers/election/ElectionProvider.vue";
+import InjectedPostForm from "@/providers/election/InjectedPostForm.vue";
 </script>
