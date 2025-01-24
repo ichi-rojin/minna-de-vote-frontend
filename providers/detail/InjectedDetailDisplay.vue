@@ -12,7 +12,7 @@
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8"
       >
         <div
-          v-for="(value, key) in detail.results"
+          v-for="(value, key) in results"
           :key="key"
           class="flex flex-col items-center rounded-lg p-4 lg:p-8"
           :class="[isVoted(value.id) ? 'bg-yellow-100' : 'bg-gray-100']"
@@ -88,6 +88,7 @@
 </template>
 
 <script lang="ts" setup>
+import _ from "lodash";
 import { computed, onMounted } from "vue";
 import InjectedPostButton from "../vote/InjectedPostButton.vue";
 import DetailKey from "./key";
@@ -97,6 +98,9 @@ import { useRoute } from "vue-router";
 
 const store = injector(DetailKey);
 const detail = computed(() => store.detail);
+const results = computed(() =>
+  _(store.detail.results).orderBy("votes", "desc").value()
+);
 const voteStore = injector(VoteKey);
 const { get } = injector(VoteKey);
 const route = useRoute();
