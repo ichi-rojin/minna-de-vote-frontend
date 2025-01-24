@@ -29,13 +29,15 @@
           <a
             href="/list"
             class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-            >選挙！を探す</a
           >
+            選挙！を探す
+          </a>
           <a
             href="#what"
             class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-            >みんなの選挙！って？</a
           >
+            みんなの選挙！って？
+          </a>
         </div>
       </div>
       <div
@@ -88,126 +90,28 @@
               結果が出ても何も決まりません！
             </h2>
             <p class="text-gray-500 sm:text-lg mb-6 md:mb-8">
-              みんなの選挙！は勝手に選挙をしてるだけ！<br />だから出た結果で、世の中なにも決まらないし、変わらない。<br />政治の事何も分からなくても、誰でも参加できるので、気軽に投票してね！
+              みんなの選挙！は勝手に選挙をしてるだけ！
+              <br />
+              だから出た結果で、世の中なにも決まらないし、変わらない。
+              <br />
+              政治の事何も分からなくても、誰でも参加できるので、気軽に投票してね！
             </p>
             <div>
               <a
                 href="/list"
                 class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-                >選挙！を探す</a
               >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-white py-6 sm:py-8 lg:py-12">
-      <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
-        <div class="flex justify-between items-end gap-4 mb-6">
-          <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold">
-            第26回参議院議員通常選挙特集 注目の選挙！区
-          </h2>
-          <a
-            href="#"
-            class="inline-block bg-white hover:bg-gray-100 active:bg-gray-200 focus-visible:ring ring-indigo-300 border text-gray-500 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 md:px-8 py-2 md:py-3"
-          >
-            もっと見る
-          </a>
-        </div>
-        <div
-          class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6"
-        >
-          <div>
-            <a
-              href="#"
-              class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-            >
-              <img
-                src="@/assets/img/vote/district1.jpg?cache=a01a1396892eb0d720fd"
-                loading="lazy"
-                alt="Photo by Austin Wade"
-                class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-              />
-            </a>
-            <div class="flex flex-col">
-              <span class="text-gray-500">注目は維新！</span>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-              >
-                大阪 選挙区
-              </a>
-            </div>
-          </div>
-          <div>
-            <a
-              href="#"
-              class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-            >
-              <img
-                src="@/assets/img/vote/district2.jpg?cache=ac0d83e1142b623ad83b"
-                loading="lazy"
-                alt="Photo by engin akyurt"
-                class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-              />
-            </a>
-            <div class="flex flex-col">
-              <span class="text-gray-500">やっぱり東京！</span>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-              >
-                東京 選挙区
-              </a>
-            </div>
-          </div>
-          <div>
-            <a
-              href="#"
-              class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-            >
-              <img
-                src="@/assets/img/vote/district3.jpg?cache=cded825d1619039bfc52"
-                loading="lazy"
-                alt="Photo by Austin Wade"
-                class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-              />
-            </a>
-            <div class="flex flex-col">
-              <span class="text-gray-500">Ｎ党、どこまで食い込める？</span>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-              >
-                神奈川 選挙区
-              </a>
-            </div>
-          </div>
-          <div>
-            <a
-              href="#"
-              class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-            >
-              <img
-                src="@/assets/img/vote/district4.jpg?cache=db3d32507958d17c5ade"
-                loading="lazy"
-                alt="Photo by Austin Wade"
-                class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-              />
-            </a>
-            <div class="flex flex-col">
-              <span class="text-gray-500">獲れるか、れいわ？</span>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-              >
-                愛知 選挙区
+                選挙！を探す
               </a>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <ListProvider>
+      <InjectedFetch />
+      <InjectedTopDisplay />
+    </ListProvider>
     <div class="bg-white py-6 sm:py-8 lg:py-12">
       <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
         <div class="mb-10 md:mb-16">
@@ -227,8 +131,9 @@
             <label
               for="company"
               class="inline-block text-gray-800 text-sm sm:text-base mb-2"
-              >選挙！名</label
             >
+              選挙！名
+            </label>
             <input
               name="title"
               class="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
@@ -296,13 +201,15 @@
                 <a
                   href="#"
                   class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-                  >候補者を追加する</a
                 >
+                  候補者を追加する
+                </a>
                 <a
                   href="#"
                   class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-                  >新しい選挙！を投稿する</a
                 >
+                  新しい選挙！を投稿する
+                </a>
               </div>
             </div>
           </div>

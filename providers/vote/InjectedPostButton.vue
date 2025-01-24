@@ -1,7 +1,7 @@
 <template>
   <button
     v-if="enabledVote"
-    :onclick="vote"
+    @click="vote"
     class="block flex-auto bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
   >
     投票する
@@ -17,28 +17,29 @@ import VoteKey from "./key";
 import injector from "@/providers/injector";
 import { useRoute } from "vue-router";
 
-const props = defineProps({
-  vote: Number,
-});
+interface Props {
+  vote: number;
+}
+const props = defineProps<Props>();
 
 const store = injector(VoteKey);
 const { post } = injector(VoteKey);
 const route = useRoute();
 
 const election = computed(() =>
-  store.history.elections.filter((e) => {
+  store.history.results.filter((e) => {
     return e.id === parseInt(route.params.id as string);
   })
 );
 const enabledVote = computed(() => election.value.length < 1);
 const isVoted = computed(
   () =>
-    store.history.elections.filter((e) => {
-      return e.vote === props?.vote;
+    store.history.results.filter((e) => {
+      return e.vote === props.vote;
     }).length > 0
 );
 
 const vote = () => {
-  post(parseInt(route.params.id as string), props?.vote);
+  post(parseInt(route.params.id as string), props.vote);
 };
 </script>

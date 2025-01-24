@@ -47,7 +47,7 @@ export default function detailStore() {
       detail.results = res.data.results;
     },
 
-    async post(id: number, vote: number | undefined) {
+    async post(id: number, vote: number) {
       const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,

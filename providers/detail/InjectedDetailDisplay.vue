@@ -15,7 +15,7 @@
           v-for="(value, key) in detail.results"
           :key="key"
           class="flex flex-col items-center rounded-lg p-4 lg:p-8"
-          :class="[isVoted(value) ? 'bg-yellow-100' : 'bg-gray-100']"
+          :class="[isVoted(value.id) ? 'bg-yellow-100' : 'bg-gray-100']"
         >
           <div
             class="w-24 md:w-32 h-24 md:h-32 bg-gray-200 rounded-full overflow-hidden shadow-lg mb-2 md:mb-4"
@@ -30,7 +30,9 @@
           <div>
             <div
               class="md:text-lg font-bold text-center"
-              :class="[isVoted(value) ? 'text-yellow-600' : 'text-indigo-500']"
+              :class="[
+                isVoted(value.id) ? 'text-yellow-600' : 'text-indigo-500',
+              ]"
             >
               {{ value.name }}
             </div>
@@ -104,8 +106,8 @@ const getSrc = (img: string) => {
 };
 
 const isVoted = (vote: number) =>
-  voteStore.history.elections.filter((v) => {
-    return v.vote === vote.id && parseInt(route.params.id as string) === v.id;
+  voteStore.history.results.filter((v) => {
+    return v.vote === vote && parseInt(route.params.id as string) === v.id;
   }).length > 0;
 
 onMounted(() => {
