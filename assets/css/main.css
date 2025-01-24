@@ -936,7 +936,7 @@ video {
 }.ease-out {
   -webkit-transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
           transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
-}.hover\:bg-gray-100:hover {
+}input[type=date]{min-height:2.5em}.hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }.hover\:bg-indigo-600:hover {

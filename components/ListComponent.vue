@@ -1,7 +1,7 @@
 <template>
   <ListProvider>
-    <InjectedFetchButton ref="button" />
     <InjectedListDisplay />
+    <InjectedFetchButton ref="button" />
   </ListProvider>
 </template>
 

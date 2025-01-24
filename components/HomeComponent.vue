@@ -19,7 +19,9 @@
         <p
           class="lg:w-4/5 text-gray-500 xl:text-lg leading-relaxed mb-8 md:mb-12"
         >
-          結果が出ても、何も世の中は変わらないから、<br />気軽に選挙に参加してみよう！
+          結果が出ても、何も世の中は変わらないから、
+          <br />
+          気軽に選挙に参加してみよう！
         </p>
         <div
           class="flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-2.5"
@@ -72,7 +74,13 @@
               みんなの選挙！って？
             </h1>
             <p class="text-gray-500 sm:text-lg mb-6 md:mb-8">
-              選挙に行ってみたいけど、良く分からない。<br />立候補した人がどんな人なのかも分からないし、<br />せっかく投票しても落選したら、意味ないの？<br />そもそも自分が選んだ人で大丈夫？
+              選挙に行ってみたいけど、良く分からない。
+              <br />
+              立候補した人がどんな人なのかも分からないし、
+              <br />
+              せっかく投票しても落選したら、意味ないの？
+              <br />
+              そもそも自分が選んだ人で大丈夫？
             </p>
             <h2
               class="text-gray-800 text-xl sm:text-2xl font-semibold text-center md:text-left mb-2 md:mb-4"
@@ -102,8 +110,9 @@
           <a
             href="#"
             class="inline-block bg-white hover:bg-gray-100 active:bg-gray-200 focus-visible:ring ring-indigo-300 border text-gray-500 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 md:px-8 py-2 md:py-3"
-            >もっと見る</a
           >
+            もっと見る
+          </a>
         </div>
         <div
           class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6"
@@ -112,76 +121,88 @@
             <a
               href="#"
               class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-              ><img
+            >
+              <img
                 src="@/assets/img/vote/district1.jpg?cache=a01a1396892eb0d720fd"
                 loading="lazy"
                 alt="Photo by Austin Wade"
                 class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-            /></a>
+              />
+            </a>
             <div class="flex flex-col">
               <span class="text-gray-500">注目は維新！</span>
               <a
                 href="#"
                 class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-                >大阪 選挙区</a
               >
+                大阪 選挙区
+              </a>
             </div>
           </div>
           <div>
             <a
               href="#"
               class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-              ><img
+            >
+              <img
                 src="@/assets/img/vote/district2.jpg?cache=ac0d83e1142b623ad83b"
                 loading="lazy"
                 alt="Photo by engin akyurt"
                 class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-            /></a>
+              />
+            </a>
             <div class="flex flex-col">
               <span class="text-gray-500">やっぱり東京！</span>
               <a
                 href="#"
                 class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-                >東京 選挙区</a
               >
+                東京 選挙区
+              </a>
             </div>
           </div>
           <div>
             <a
               href="#"
               class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-              ><img
+            >
+              <img
                 src="@/assets/img/vote/district3.jpg?cache=cded825d1619039bfc52"
                 loading="lazy"
                 alt="Photo by Austin Wade"
                 class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-            /></a>
+              />
+            </a>
             <div class="flex flex-col">
               <span class="text-gray-500">Ｎ党、どこまで食い込める？</span>
               <a
                 href="#"
                 class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-                >神奈川 選挙区</a
               >
+                神奈川 選挙区
+              </a>
             </div>
           </div>
           <div>
             <a
               href="#"
               class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
-              ><img
+            >
+              <img
                 src="@/assets/img/vote/district4.jpg?cache=db3d32507958d17c5ade"
                 loading="lazy"
                 alt="Photo by Austin Wade"
                 class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
-            /></a>
+              />
+            </a>
             <div class="flex flex-col">
               <span class="text-gray-500">獲れるか、れいわ？</span>
               <a
                 href="#"
                 class="text-gray-800 hover:text-gray-500 text-lg lg:text-xl font-bold transition duration-100"
-                >愛知 選挙区</a
               >
+                愛知 選挙区
+              </a>
             </div>
           </div>
         </div>
@@ -217,8 +238,9 @@
             <label
               for="candidate"
               class="inline-block text-gray-800 text-sm sm:text-base mb-2"
-              >候補者</label
             >
+              候補者
+            </label>
             <div class="grid gap-4">
               <div>
                 <div class="max-w-screen-2xl mx-auto">
@@ -236,8 +258,9 @@
                     <a
                       href="#"
                       class="order-last sm:order-none w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap rounded-lg outline-none transition duration-100 px-4 py-2"
-                      >写真を追加</a
                     >
+                      写真を追加
+                    </a>
                     <div
                       class="order-2 sm:order-none w-1/12 sm:w-auto flex justify-end items-start sm:absolute sm:right-0 sm:mr-2 xl:mr-3"
                     >

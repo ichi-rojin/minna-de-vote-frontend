@@ -6,7 +6,9 @@ interface IList {
   id: number;
   createdAt: string;
   updatedAt: string;
-  data: string;
+  date: string;
+  title: string;
+  img: string;
 }
 interface IGetResponse {
   timestamp: number;
