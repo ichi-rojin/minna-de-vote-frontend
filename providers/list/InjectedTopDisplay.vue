@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import ListKey from "./list-key";
+import ListKey from "./key";
 import injector from "@/providers/injector";
 
 const store = injector(ListKey);

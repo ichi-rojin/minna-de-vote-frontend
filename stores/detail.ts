@@ -14,6 +14,10 @@ interface IGetResponse {
   title: string;
   results: Array<IDetail>;
 }
+interface IPostResponse {
+  timestamp: number;
+  elections: Array<[]>;
+}
 
 export default function detailStore() {
   const detail: IGetResponse = reactive({
@@ -22,16 +26,34 @@ export default function detailStore() {
     results: [],
   });
 
+  const history: IPostResponse = reactive({
+    timestamp: 0,
+    elections: [],
+  });
+
   return {
     get detail() {
       return detail;
     },
 
+    get history() {
+      return history;
+    },
+
     async fetch(id: number) {
-      const res = await axios.get<IGetResponse>(ApiUrls.GET_Detail + `/${id}`);
+      const res = await axios.get<IGetResponse>(ApiUrls.GET_DETAIL + `/${id}`);
       detail.timestamp = res.data.timestamp;
       detail.title = res.data.title;
       detail.results = res.data.results;
+    },
+
+    async post(id: number, vote: number | undefined) {
+      const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
+        id,
+        vote,
+      });
+      history.timestamp = res.data.timestamp;
+      history.elections = res.data.elections;
     },
   };
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { defineExpose } from "vue";
-import DetailKey from "./detail-key";
+import DetailKey from "./key";
 import injector from "@/providers/injector";
 import { useRoute } from "vue-router";
 
@@ -10,5 +10,5 @@ const route = useRoute();
 defineExpose({
   fetch,
 });
-fetch(parseInt(route.params.id));
+fetch(parseInt(route.params.id as string));
 </script>
