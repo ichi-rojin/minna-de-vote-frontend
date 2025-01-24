@@ -6,6 +6,9 @@
   >
     投票する
   </button>
+  <template v-else>
+    <div v-if="isVoted">この候補者に投票しました。</div>
+  </template>
 </template>
 
 <script lang="ts" setup>
@@ -28,6 +31,12 @@ const election = computed(() =>
   })
 );
 const enabledVote = computed(() => election.value.length < 1);
+const isVoted = computed(
+  () =>
+    store.history.elections.filter((e) => {
+      return e.vote === props?.vote;
+    }).length > 0
+);
 
 const vote = () => {
   post(parseInt(route.params.id as string), props?.vote);

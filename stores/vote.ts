@@ -18,6 +18,12 @@ export default function voteStore() {
       return history;
     },
 
+    async get() {
+      const res = await axios.get<IPostResponse>(ApiUrls.GET_VOTE);
+      history.timestamp = res.data.timestamp;
+      history.elections = res.data.elections;
+    },
+
     async post(id: number, vote: number | undefined) {
       const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
