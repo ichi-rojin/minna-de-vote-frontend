@@ -11,29 +11,16 @@ const routes: Array<RouteRecordRaw> = [
     name: "list",
     component: import("../views/ListView.vue"),
   },
+  {
+    path: "/detail/:id",
+    name: "detail",
+    component: import("../views/DetailView.vue"),
+  },
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-});
-
-router.afterEach(() => {
-  document.querySelectorAll("a").forEach((a) => {
-    const href = a.getAttribute("href");
-    if (!href) {
-      return;
-    }
-    const regex = /^(?:https?:)?\/\//;
-    // 外部リンク
-    const isExternalLink = regex.test(href);
-    if (isExternalLink) return;
-
-    a.addEventListener("click", (event) => {
-      event.preventDefault();
-      router.push(href);
-    });
-  });
 });
 
 export default router;
