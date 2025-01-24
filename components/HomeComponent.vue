@@ -44,7 +44,7 @@
         class="xl:w-5/12 h-48 lg:h-auto bg-gray-100 overflow-hidden shadow-lg rounded-lg"
       >
         <img
-          src="@/assets/img/home/main.jpg?cache=f2f43aeb9b5cf39f0f11"
+          src="@/assets/img/home/main.jpg"
           loading="lazy"
           alt="Photo by Fakurian Design"
           class="w-full h-full object-cover object-center"
@@ -59,7 +59,7 @@
               class="h-3/4 md:h-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg"
             >
               <img
-                src="@/assets/img/home/vote1.png?cache=1c8da6a3de12c742e1f4"
+                src="@/assets/img/home/vote1.png"
                 loading="lazy"
                 alt="Photo by Martin Sanchez"
                 class="w-full h-full object-cover object-center"

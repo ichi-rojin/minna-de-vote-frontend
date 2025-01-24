@@ -21,7 +21,7 @@
             class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
           >
             <img
-              :src="getSrc(value.img)"
+              :src="value.img"
               loading="lazy"
               alt="Photo by Austin Wade"
               class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
@@ -50,9 +50,6 @@ import injector from "@/providers/injector";
 const store = injector(ListKey);
 const list = computed(() => store.list);
 
-const getSrc = (img: string) => {
-  return require("@/assets/img/" + img);
-};
 const getLink = (id: number) => {
   return `/detail/${id}`;
 };

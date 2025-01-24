@@ -21,7 +21,7 @@
             class="w-24 md:w-32 h-24 md:h-32 bg-gray-200 rounded-full overflow-hidden shadow-lg mb-2 md:mb-4"
           >
             <img
-              :src="getSrc(value.img)"
+              :src="value.img"
               :alt="value.party + ' ' + value.name"
               loading="lazy"
               class="w-full h-full object-cover object-center"
@@ -104,10 +104,6 @@ const results = computed(() =>
 const voteStore = injector(VoteKey);
 const { get } = injector(VoteKey);
 const route = useRoute();
-
-const getSrc = (img: string) => {
-  return require("@/assets/img/" + img);
-};
 
 const isVoted = (vote: number) =>
   voteStore.history.results.filter((v) => {
