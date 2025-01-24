@@ -44,7 +44,7 @@ export const ErrorHandler = (error: Error | string): string => {
   return msg;
 };
 
-export const ResizeImage = async (base64: string) => {
+export const ResizeImage = async (base64: string): Promise<string> => {
   const mime = base64.split(";")[0].split("data:")[1];
 
   const SIZE = 128 * 2;

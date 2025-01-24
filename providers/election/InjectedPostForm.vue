@@ -52,7 +52,10 @@
           <div class="grid gap-4">
             <ElectorsComponent
               v-model="electors"
+              @errorStackHandler="electorsErrorStack"
+              :errorStack="errorStack"
               :maxNumberElectors="maxNumberElectors"
+              :maxNameLength="maxNameLength"
             />
           </div>
         </div>
@@ -89,12 +92,14 @@ const electors = ref([
   {
     name: "",
     img: "",
+    msg: "",
   },
 ]);
 const maxNumberElectors = 20;
 const maxTextLength = 50;
+const maxNameLength = 20;
 
-const errorStack = ref({});
+const errorStack: any = ref({});
 const hasErrorStack = computed(() => {
   return Object.keys(errorStack.value).length !== 0;
 });

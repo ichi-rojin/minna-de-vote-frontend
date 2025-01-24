@@ -29,6 +29,7 @@
             v-model="elector.name"
             name="electors"
             class="w-full h-full border-0 bg-gray-50 text-gray-800 border focus:ring ring-blue-300 md:rounded roundedrounded-none outline-none transition duration-100 px-3 py-2"
+            :placeholder="`名前を${maxNameLength}文字以内で入力してください。`"
           />
         </div>
         <div
@@ -76,19 +77,20 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, defineEmits, ref } from "vue";
+import { defineProps, defineEmits, ref, watch } from "vue";
 import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
 interface IElectors {
-  name: "";
-  img: "";
-  msg: "";
+  name: string;
+  img: string;
+  msg: string;
 }
 interface Props {
   maxNumberElectors: number;
+  maxNameLength: number;
   modelValue: Array<IElectors>;
 }
 const props = defineProps<Props>();
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "errorStackHandler"]);
 
 let electorsErrorMsg = ref("");
 const invalidElector = (length: number) => {
@@ -146,7 +148,7 @@ const fileChange = (event: Event, index: number) => {
         "update:modelValue",
         props.modelValue.map((item, i) => {
           if (i !== index) return item;
-          item.img = resizedfile;
+          item.img = String(resizedfile);
           return item;
         })
       );
@@ -156,4 +158,21 @@ const fileChange = (event: Event, index: number) => {
   }
   showErrorMsg("");
 };
+
+watch([props], () => {
+  let hasError = false;
+  props.modelValue.forEach((item) => {
+    if (item.name.length > props.maxNameLength) {
+      item.msg = "名前が長すぎます。";
+      hasError = true;
+    } else {
+      item.msg = "";
+    }
+  });
+  if (hasError) {
+    emit("errorStackHandler", true);
+  } else {
+    emit("errorStackHandler", false);
+  }
+});
 </script>
