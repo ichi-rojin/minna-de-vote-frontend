@@ -54,9 +54,9 @@
     <div class="bg-white py-6 sm:py-8 lg:py-12" id="what">
       <div class="mx-auto">
         <div class="grid md:grid-cols-10 gap-8 lg:gap-12">
-          <div class="col-span-3">
+          <div class="md:col-span-3 md:order-none order-2 w-full">
             <div
-              class="h-64 md:h-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg"
+              class="h-3/4 md:h-auto bg-gray-100 overflow-hidden rounded-lg shadow-lg"
             >
               <img
                 src="@/assets/img/home/vote1.png?cache=1c8da6a3de12c742e1f4"
@@ -66,7 +66,7 @@
               />
             </div>
           </div>
-          <div class="col-span-7 md:pt-8">
+          <div class="md:col-span-7 md:pt-8">
             <p class="text-indigo-500 font-bold text-center md:text-left">
               実際の選挙とは関係ないよ！
             </p>
@@ -99,7 +99,7 @@
             <div>
               <a
                 href="/list"
-                class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
+                class="md:inline-block block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
               >
                 選挙！を探す
               </a>

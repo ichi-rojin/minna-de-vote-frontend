@@ -1,6 +1,6 @@
 <template>
   <div class="bg-white py-6 sm:py-8 lg:py-12">
-    <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
+    <div class="max-w-screen-2xl px-4 md:px-8 px-0 mx-auto">
       <div class="mb-10 md:mb-16">
         <h2
           class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6"
@@ -49,24 +49,38 @@
             <div v-for="(elector, index) in electors" :key="index">
               <div class="max-w-screen-2xl mx-auto">
                 <div
-                  class="flex flex-wrap sm:flex-nowrap sm:justify-center sm:items-center bg-blue-500 rounded-lg shadow-lg relative sm:gap-3 px-4 sm:pr-8 ms:px-8 py-3"
+                  class="flex flex-wrap md:gap-3 gap-1 sm:flex-nowrap sm:justify-center sm:items-center bg-blue-500 rounded-lg shadow-lg relative sm:gap-3 md:px-3 px-1 ms:px-8 md:py-3 py-1 md:pr-8"
                 >
+                  <label
+                    :for="'file-' + index"
+                    class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap md:rounded-lg rounded-md outline-none transition duration-100 md:px-4 md:py-2 p-1 flex flex-wrap items-center"
+                  >
+                    <input
+                      @change="fileChange"
+                      :id="'file-' + index"
+                      :index="index"
+                      type="file"
+                      class="hidden"
+                    />
+                    写真<span class="md:inline hidden">を</span>追加
+                    <img
+                      v-if="elector.img"
+                      :src="elector.img"
+                      class="md:ml-5 ml-1 w-10 h-10 object-cover"
+                      alt=""
+                    />
+                  </label>
                   <div
-                    class="order-1 sm:order-none w-11/12 sm:w-auto max-w-screen-sm inline-block text-white text-sm md:text-base mb-2 sm:mb-0"
+                    class="flex-1 max-w-screen-sm inline-block text-white text-sm md:text-base"
                   >
                     <input
                       v-model="elector.name"
                       name="electors"
-                      class="w-full bg-gray-50 text-gray-800 border focus:ring ring-blue-300 rounded outline-none transition duration-100 px-3 py-2"
+                      class="w-full h-full border-0 bg-gray-50 text-gray-800 border focus:ring ring-blue-300 md:rounded roundedrounded-none outline-none transition duration-100 px-3 py-2"
                     />
                   </div>
-                  <button
-                    class="order-last sm:order-none w-full sm:w-auto inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap rounded-lg outline-none transition duration-100 px-4 py-2"
-                  >
-                    写真を追加
-                  </button>
                   <div
-                    class="order-2 sm:order-none w-1/12 sm:w-auto flex justify-end items-start sm:absolute sm:right-0 sm:mr-2 xl:mr-3"
+                    class="order-2 sm:order-none md:w-1/12 sm:w-auto flex justify-end items-center sm:absolute sm:right-1"
                   >
                     <button
                       @click="removeElector(index)"
@@ -122,6 +136,7 @@
 </template>
 
 <script lang="ts" setup>
+import { Buffer } from "buffer";
 import { ref } from "vue";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
@@ -159,6 +174,27 @@ const addElector = () => {
 const removeElector = (i: number) => {
   invalidElector(electors.value.length - 1);
   electors.value.splice(i, 1);
+};
+const fileChange = (event: Event) => {
+  try {
+    const target = event.target as HTMLInputElement;
+    const index = target.getAttribute("index");
+    const file = (target.files as FileList)[0];
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(file);
+    reader.onload = function () {
+      const result = Buffer.from(reader.result).toString("base64");
+      electors.value[index].img = "data:image/png;base64," + result;
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+    } else if (typeof error === "string") {
+      console.log(error);
+    } else {
+      console.log("unexpected error");
+    }
+  }
 };
 const submit = () => {
   if (invalidElector(electors.value.length)) return;
