@@ -53,12 +53,11 @@
                 >
                   <label
                     :for="'file-' + index"
-                    class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap md:rounded-lg rounded-md outline-none transition duration-100 md:px-4 md:py-2 p-1 flex flex-wrap items-center"
+                    class="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap md:rounded-lg rounded-md outline-none transition duration-100 md:px-4 md:py-2 p-1 flex flex-wrap items-center"
                   >
                     <input
-                      @change="fileChange"
+                      @change="fileChange($event, index)"
                       :id="'file-' + index"
-                      :index="index"
                       type="file"
                       class="hidden"
                     />
@@ -136,8 +135,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Buffer } from "buffer";
 import { ref } from "vue";
+import { ResizeImage } from "@/plugins/resizeImage";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
 
@@ -149,7 +148,7 @@ const electors = ref([
     img: "",
   },
 ]);
-const MaxNumberElectors = 20;
+const MaxNumberElectors = 3;
 let hasError = ref(false);
 
 const { post } = injector(ElectionKey);
@@ -165,7 +164,6 @@ const invalidElector = (length: number) => {
 
 const addElector = () => {
   if (invalidElector(electors.value.length + 1)) return;
-  hasError.value = false;
   electors.value.push({
     name: "",
     img: "",
@@ -175,29 +173,36 @@ const removeElector = (i: number) => {
   invalidElector(electors.value.length - 1);
   electors.value.splice(i, 1);
 };
-const fileChange = (event: Event) => {
+const submit = () => {
+  if (invalidElector(electors.value.length)) return;
+  post(title.value, description.value, electors.value);
+};
+const fileChange = (event: Event, i: number) => {
   try {
     const target = event.target as HTMLInputElement;
-    const index = target.getAttribute("index");
+    const index = i;
     const file = (target.files as FileList)[0];
     const reader = new FileReader();
-    reader.readAsArrayBuffer(file);
-    reader.onload = function () {
-      const result = Buffer.from(reader.result).toString("base64");
-      electors.value[index].img = "data:image/png;base64," + result;
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : "";
+      if (!result) {
+        throw "UnreadableFile";
+      }
+      ResizeImage(result, (resizedfile: string) => {
+        electors.value[index].img = resizedfile;
+      });
     };
   } catch (error) {
-    if (error instanceof Error) {
+    if (error === "UnreadableFile") {
+      console.log("ファイルが読み込めません。");
+    } else if (error instanceof Error) {
       console.log(error.message);
     } else if (typeof error === "string") {
       console.log(error);
     } else {
-      console.log("unexpected error");
+      console.log("想定外のエラーです。");
     }
   }
-};
-const submit = () => {
-  if (invalidElector(electors.value.length)) return;
-  post(title.value, description.value, electors.value);
 };
 </script>
