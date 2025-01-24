@@ -19,10 +19,10 @@
           >
             選挙！名
           </label>
-          <input
+          <TitleComponent
             v-model="title"
-            name="title"
-            class="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+            :name="title"
+            :maxTextLength="maxTextLength"
           />
         </div>
         <div>
@@ -32,10 +32,10 @@
           >
             説明文
           </label>
-          <input
+          <DescriptionComponent
             v-model="description"
-            name="description"
-            class="w-full bg-gray-50 text-gray-800 border focus:ring ring-indigo-300 rounded outline-none transition duration-100 px-3 py-2"
+            :name="description"
+            :maxTextLength="maxTextLength"
           />
         </div>
         <div>
@@ -46,83 +46,13 @@
             候補者
           </label>
           <div class="grid gap-4">
-            <div v-for="(elector, index) in electors" :key="index">
-              <div class="max-w-screen-2xl mx-auto">
-                <div
-                  class="flex flex-wrap md:gap-3 gap-1 sm:flex-nowrap sm:justify-center sm:items-center bg-blue-500 rounded-lg shadow-lg relative sm:gap-3 md:px-3 px-1 ms:px-8 md:py-3 py-1 md:pr-8"
-                >
-                  <label
-                    :for="'file-' + index"
-                    class="inline-block cursor-pointer bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-xs md:text-sm font-semibold text-center whitespace-nowrap md:rounded-lg rounded-md outline-none transition duration-100 md:px-4 md:py-2 p-1 flex flex-wrap items-center"
-                  >
-                    <input
-                      @change="fileChange($event, index)"
-                      :id="'file-' + index"
-                      type="file"
-                      class="hidden"
-                    />
-                    写真<span class="md:inline hidden">を</span>追加
-                    <img
-                      v-if="elector.img"
-                      :src="elector.img"
-                      class="md:ml-5 ml-1 w-10 h-10 object-cover"
-                      alt=""
-                    />
-                  </label>
-                  <div
-                    class="flex-1 max-w-screen-sm inline-block text-white text-sm md:text-base"
-                  >
-                    <input
-                      v-model="elector.name"
-                      name="electors"
-                      class="w-full h-full border-0 bg-gray-50 text-gray-800 border focus:ring ring-blue-300 md:rounded roundedrounded-none outline-none transition duration-100 px-3 py-2"
-                    />
-                  </div>
-                  <div
-                    class="order-2 sm:order-none md:w-1/12 sm:w-auto flex justify-end items-center sm:absolute sm:right-1"
-                  >
-                    <button
-                      @click="removeElector(index)"
-                      type="button"
-                      class="text-white hover:text-blue-100 active:text-blue-200 transition duration-100"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 xl:w-6 h-5 xl:h-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <p
-              v-if="electorsErrorMsg"
-              class="text-red-600 text-sm font-semibold"
-            >
-              {{ electorsErrorMsg }}
-            </p>
-            <p v-else class="text-gray-400 text-xs">
-              候補者は{{ MaxNumberElectors }}名まで追加できます。
-            </p>
+            <ElectorsComponent
+              v-model="electors"
+              :maxNumberElectors="maxNumberElectors"
+            />
           </div>
         </div>
         <div class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5">
-          <button
-            @click="addElector"
-            class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-          >
-            候補者を追加する
-          </button>
           <button
             @click="submit"
             class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
@@ -137,9 +67,11 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
+import TitleComponent from "./InjectedPostForm/InputTextComponent.vue";
+import DescriptionComponent from "./InjectedPostForm/InputTextComponent.vue";
+import ElectorsComponent from "./InjectedPostForm/ElectorsComponent.vue";
 
 const title = ref("");
 const description = ref("");
@@ -149,55 +81,13 @@ const electors = ref([
     img: "",
   },
 ]);
-const MaxNumberElectors = 20;
-let electorsErrorMsg = ref("");
+const maxNumberElectors = 20;
+const maxTextLength = 50;
 
 const { post } = injector(ElectionKey);
 
-const invalidElector = (length: number) => {
-  if (length > MaxNumberElectors) {
-    electorsErrorMsg.value = `候補者は${MaxNumberElectors}名までです。`;
-    return true;
-  }
-  electorsErrorMsg.value = "";
-  return false;
-};
-
-const addElector = () => {
-  if (invalidElector(electors.value.length + 1)) return;
-  electors.value.push({
-    name: "",
-    img: "",
-  });
-};
-const removeElector = (i: number) => {
-  invalidElector(electors.value.length - 1);
-  electors.value.splice(i, 1);
-};
 const submit = () => {
-  if (invalidElector(electors.value.length)) return;
+  // if (invalidElector(electors.value.length)) return;
   post(title.value, description.value, electors.value);
-};
-const fileChange = (event: Event, index: number) => {
-  try {
-    const target = event.target as HTMLInputElement;
-    const file = (target.files as FileList)[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const result = typeof reader.result === "string" ? reader.result : "";
-      if (!result) {
-        throw "UnreadableFile";
-      }
-      const resizedfile = await ResizeImage(result).catch(
-        (error: Error | string) => {
-          ErrorHandler(error);
-        }
-      );
-      electors.value[index].img = resizedfile;
-    };
-  } catch (error: Error | string) {
-    ErrorHandler(error);
-  }
 };
 </script>
