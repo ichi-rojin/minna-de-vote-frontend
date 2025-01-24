@@ -311,3 +311,9 @@
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import ListProvider from "@/providers/list/ListProvider.vue";
+import InjectedTopDisplay from "@/providers/list/InjectedTopDisplay.vue";
+import InjectedFetch from "@/providers/list/InjectedFetch.vue";
+</script>
