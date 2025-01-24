@@ -1,6 +1,7 @@
 import router from ".";
+import { Plugin } from "vue";
 
-const routerEnforcer: any = {
+const routerEnforcer: Plugin = {
   install: () => {
     initialize();
   },
@@ -8,21 +9,33 @@ const routerEnforcer: any = {
 
 const initialize = () => {
   router.afterEach(() => {
-    document.querySelectorAll("a").forEach((a) => {
-      const href = a.getAttribute("href");
-      if (!href) {
-        return;
-      }
-      const regex = /^(?:https?:)?\/\//;
-      // 外部リンク
-      const isExternalLink = regex.test(href);
-      if (isExternalLink) return;
+    const container = document.querySelectorAll("body:not(.isDelegated)")?.[0];
+    if (!container) return;
 
-      a.addEventListener("click", (event) => {
-        event.preventDefault();
-        router.push(href);
-      });
+    container.addEventListener("click", (event) => {
+      const et = event?.target as HTMLInputElement;
+      let isLink = false;
+      let href = "";
+      if (et.matches("a")) {
+        isLink = true;
+        href = et?.getAttribute("href") as string;
+      }
+      if (et.matches("img") && et?.parentElement?.matches("a")) {
+        isLink = true;
+        href = et?.parentElement?.getAttribute("href") as string;
+      }
+      if (!isLink) return;
+      if (!href) return;
+
+      const regex = /^(?:(?:https?:)?\/\/|#)/;
+      // 外部リンク or アンカー
+      const isExcepted = regex.test(href);
+      if (isExcepted) return;
+
+      event.preventDefault();
+      router.push(href);
     });
+    document.body.classList.add("isDelegated");
   });
 };
 
