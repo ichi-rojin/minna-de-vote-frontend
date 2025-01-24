@@ -24,16 +24,24 @@ const loadImage = async (base64: string) => {
   });
 };
 
-export const ErrorHandler = (error: Error | string) => {
+export const ErrorHandler = (error: Error | string): string => {
+  let msg = "";
   if (error === "UnreadableFile") {
-    console.log("ファイルが読み込めません。");
+    msg = "ファイルが読み込めません。";
+    console.log(msg);
+    return msg;
   } else if (error instanceof Error) {
-    console.log(error.message);
+    msg = error.message;
+    console.log(msg);
+    return msg;
   } else if (typeof error === "string") {
+    msg = error;
     console.log(error);
-  } else {
-    console.log("想定外のエラーです。");
+    return msg;
   }
+  msg = "想定外のエラーです。";
+  console.log(msg);
+  return msg;
 };
 
 export const ResizeImage = async (base64: string) => {

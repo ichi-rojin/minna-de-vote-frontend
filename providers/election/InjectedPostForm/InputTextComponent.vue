@@ -18,14 +18,17 @@ interface Props {
   maxTextLength: number;
   modelValue: string;
   name: string;
+  errorStack: object;
 }
 const props = defineProps<Props>();
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "errorStackHandler"]);
 
 const errorMsg = computed(() => {
   if (props.modelValue.length > props.maxTextLength) {
+    emit("errorStackHandler", true);
     return `文字数は${props.maxTextLength}文字までです。`;
   }
+  emit("errorStackHandler", false);
   return "";
 });
 </script>

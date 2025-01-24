@@ -57,6 +57,9 @@
         </div>
       </div>
     </div>
+    <p v-if="elector.msg" class="text-red-600 text-sm font-semibold">
+      {{ elector.msg }}
+    </p>
   </div>
   <button
     @click="addElector"
@@ -78,6 +81,7 @@ import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
 interface IElectors {
   name: "";
   img: "";
+  msg: "";
 }
 interface Props {
   maxNumberElectors: number;
@@ -114,6 +118,15 @@ const removeElector = (i: number) => {
   );
 };
 const fileChange = (event: Event, index: number) => {
+  const showErrorMsg = (msg: string) => {
+    props.modelValue.map((item, i) => {
+      if (i == index) {
+        item.msg = msg;
+      }
+      return item;
+    });
+  };
+
   try {
     const target = event.target as HTMLInputElement;
     const file = (target.files as FileList)[0];
@@ -126,7 +139,7 @@ const fileChange = (event: Event, index: number) => {
       }
       const resizedfile = await ResizeImage(result).catch(
         (error: Error | string) => {
-          ErrorHandler(error);
+          showErrorMsg(ErrorHandler(error));
         }
       );
       emit(
@@ -139,7 +152,8 @@ const fileChange = (event: Event, index: number) => {
       );
     };
   } catch (error: Error | string) {
-    ErrorHandler(error);
+    showErrorMsg(ErrorHandler(error));
   }
+  showErrorMsg("");
 };
 </script>

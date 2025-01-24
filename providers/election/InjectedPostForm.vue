@@ -21,6 +21,8 @@
           </label>
           <TitleComponent
             v-model="title"
+            @errorStackHandler="titleErrorStack"
+            :errorStack="errorStack"
             :name="title"
             :maxTextLength="maxTextLength"
           />
@@ -34,6 +36,8 @@
           </label>
           <DescriptionComponent
             v-model="description"
+            @errorStackHandler="descriptionErrorStack"
+            :errorStack="errorStack"
             :name="description"
             :maxTextLength="maxTextLength"
           />
@@ -55,7 +59,13 @@
         <div class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5">
           <button
             @click="submit"
-            class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
+            :disabled="hasErrorStack"
+            :class="
+              hasErrorStack
+                ? 'disabled:opacity-70'
+                : 'hover:bg-teal-600 active:bg-teal-700'
+            "
+            class="inline-block bg-teal-500 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
           >
             新しい選挙！を投稿する
           </button>
@@ -66,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
 import TitleComponent from "./InjectedPostForm/InputTextComponent.vue";
@@ -84,10 +94,37 @@ const electors = ref([
 const maxNumberElectors = 20;
 const maxTextLength = 50;
 
+const errorStack = ref({});
+const hasErrorStack = computed(() => {
+  return Object.keys(errorStack.value).length !== 0;
+});
+
 const { post } = injector(ElectionKey);
 
+const titleErrorStack = (bool: boolean) => {
+  if (bool) {
+    errorStack.value.title = true;
+    return;
+  }
+  delete errorStack.value.title;
+};
+const descriptionErrorStack = (bool: boolean) => {
+  if (bool) {
+    errorStack.value.description = true;
+    return;
+  }
+  delete errorStack.value.description;
+};
+const electorsErrorStack = (bool: boolean) => {
+  if (bool) {
+    errorStack.value.electors = true;
+    return;
+  }
+  delete errorStack.value.electors;
+};
+
 const submit = () => {
-  // if (invalidElector(electors.value.length)) return;
+  if (hasErrorStack.value) return;
   post(title.value, description.value, electors.value);
 };
 </script>
