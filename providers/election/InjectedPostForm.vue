@@ -105,29 +105,30 @@
                 </div>
               </div>
             </div>
-            <p v-if="hasError" class="text-red-600 text-sm font-semibold">
-              候補者は{{ MaxNumberElectors }}名までです。
+            <p
+              v-if="electorsErrorMsg"
+              class="text-red-600 text-sm font-semibold"
+            >
+              {{ electorsErrorMsg }}
             </p>
             <p v-else class="text-gray-400 text-xs">
               候補者は{{ MaxNumberElectors }}名まで追加できます。
             </p>
-            <div
-              class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5"
-            >
-              <button
-                @click="addElector"
-                class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-              >
-                候補者を追加する
-              </button>
-              <button
-                @click="submit"
-                class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
-              >
-                新しい選挙！を投稿する
-              </button>
-            </div>
           </div>
+        </div>
+        <div class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5">
+          <button
+            @click="addElector"
+            class="inline-block bg-blue-600 hover:bg-blue-700 active:bg-blue-800 focus-visible:ring ring-blue-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
+          >
+            候補者を追加する
+          </button>
+          <button
+            @click="submit"
+            class="inline-block bg-teal-500 hover:bg-teal-600 active:bg-teal-700 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
+          >
+            新しい選挙！を投稿する
+          </button>
         </div>
       </div>
     </div>
@@ -136,7 +137,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { ResizeImage } from "@/plugins/resizeImage";
+import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
 
@@ -148,17 +149,17 @@ const electors = ref([
     img: "",
   },
 ]);
-const MaxNumberElectors = 3;
-let hasError = ref(false);
+const MaxNumberElectors = 20;
+let electorsErrorMsg = ref("");
 
 const { post } = injector(ElectionKey);
 
 const invalidElector = (length: number) => {
   if (length > MaxNumberElectors) {
-    hasError.value = true;
+    electorsErrorMsg.value = `候補者は${MaxNumberElectors}名までです。`;
     return true;
   }
-  hasError.value = false;
+  electorsErrorMsg.value = "";
   return false;
 };
 
@@ -177,32 +178,26 @@ const submit = () => {
   if (invalidElector(electors.value.length)) return;
   post(title.value, description.value, electors.value);
 };
-const fileChange = (event: Event, i: number) => {
+const fileChange = (event: Event, index: number) => {
   try {
     const target = event.target as HTMLInputElement;
-    const index = i;
     const file = (target.files as FileList)[0];
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => {
+    reader.onload = async () => {
       const result = typeof reader.result === "string" ? reader.result : "";
       if (!result) {
         throw "UnreadableFile";
       }
-      ResizeImage(result, (resizedfile: string) => {
-        electors.value[index].img = resizedfile;
-      });
+      const resizedfile = await ResizeImage(result).catch(
+        (error: Error | string) => {
+          ErrorHandler(error);
+        }
+      );
+      electors.value[index].img = resizedfile;
     };
-  } catch (error) {
-    if (error === "UnreadableFile") {
-      console.log("ファイルが読み込めません。");
-    } else if (error instanceof Error) {
-      console.log(error.message);
-    } else if (typeof error === "string") {
-      console.log(error);
-    } else {
-      console.log("想定外のエラーです。");
-    }
+  } catch (error: Error | string) {
+    ErrorHandler(error);
   }
 };
 </script>
