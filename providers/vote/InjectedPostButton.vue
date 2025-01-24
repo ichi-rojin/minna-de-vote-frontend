@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { defineProps, computed } from "vue";
-import DetailKey from "./key";
+import VoteKey from "./key";
 import injector from "@/providers/injector";
 import { useRoute } from "vue-router";
 
@@ -18,8 +18,8 @@ const props = defineProps({
   vote: Number,
 });
 
-const store = injector(DetailKey);
-const { post } = injector(DetailKey);
+const store = injector(VoteKey);
+const { post } = injector(VoteKey);
 const route = useRoute();
 
 const election = computed(() =>
