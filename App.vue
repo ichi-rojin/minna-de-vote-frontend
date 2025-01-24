@@ -178,28 +178,3 @@
     </footer>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { onMounted } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-onMounted(() => {
-  document.querySelectorAll("a").forEach((a) => {
-    const href = a.getAttribute("href");
-    if (!href) {
-      return;
-    }
-    const regex = /^(?:https?:)?\/\//;
-    // 外部リンク
-    const isExternalLink = regex.test(href);
-    if (isExternalLink) return;
-
-    a.addEventListener("click", (event) => {
-      event.preventDefault();
-      router.push(href);
-    });
-  });
-});
-</script>
