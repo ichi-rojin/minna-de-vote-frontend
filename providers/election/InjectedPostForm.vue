@@ -5,10 +5,10 @@
         <h2
           class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6"
         >
-          新しく選挙！をつくる。
+          新しく選挙をつくる。
         </h2>
         <p class="max-w-screen-md text-gray-500 md:text-lg text-center mx-auto">
-          あなたが考えるいろんな選挙！を投稿してね。
+          あなたが考えるいろんな選挙を投稿してね。
         </p>
       </div>
       <div class="max-w-screen-md grid gap-4 mx-auto">
@@ -17,7 +17,7 @@
             for="title"
             class="inline-block text-gray-800 text-sm sm:text-base mb-2"
           >
-            選挙！名
+            選挙名
           </label>
           <TitleComponent
             v-model="title"
@@ -70,7 +70,7 @@
             "
             class="inline-block bg-teal-500 focus-visible:ring ring-teal-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3"
           >
-            新しい選挙！を投稿する
+            新しい選挙を投稿する
           </button>
         </div>
       </div>

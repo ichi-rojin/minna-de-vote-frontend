@@ -3,7 +3,7 @@
     <div class="max-w-screen-2xl px-4 md:px-8 px-0 mx-auto">
       <div class="flex justify-between items-end gap-4 mb-6">
         <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold">
-          {{ list.title }} 注目の選挙！区
+          {{ list.title }} 注目の選挙区
         </h2>
         <a
           href="/list"

@@ -6,7 +6,7 @@
           <h2
             class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-6"
           >
-            選挙！一覧
+            選挙一覧
           </h2>
         </div>
         <ListProvider>
