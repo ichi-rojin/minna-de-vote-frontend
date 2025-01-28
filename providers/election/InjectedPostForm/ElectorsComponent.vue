@@ -58,8 +58,11 @@
         </div>
       </div>
     </div>
-    <p v-if="elector.msg" class="text-red-600 text-sm font-semibold">
-      {{ elector.msg }}
+    <p v-if="elector.imgMsg" class="text-red-600 text-sm font-semibold">
+      {{ elector.imgMsg }}
+    </p>
+    <p v-if="elector.nameMsg" class="text-red-600 text-sm font-semibold">
+      {{ elector.nameMsg }}
     </p>
   </div>
   <button
@@ -82,7 +85,8 @@ import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
 interface IElectors {
   name: string;
   img: string;
-  msg: string;
+  nameMsg: string;
+  imgMsg: string;
 }
 interface Props {
   maxNumberElectors: number;
@@ -123,7 +127,7 @@ const fileChange = (event: Event, index: number) => {
   const showErrorMsg = (msg: string) => {
     props.modelValue.map((item, i) => {
       if (i == index) {
-        item.msg = msg;
+        item.imgMsg = msg;
       }
       return item;
     });
@@ -163,10 +167,10 @@ watch([props], () => {
   let hasError = false;
   props.modelValue.forEach((item) => {
     if (item.name.length > props.maxNameLength) {
-      item.msg = "名前が長すぎます。";
+      item.nameMsg = "名前が長すぎます。";
       hasError = true;
     } else {
-      item.msg = "";
+      item.nameMsg = "";
     }
   });
   if (hasError) {

@@ -18,7 +18,6 @@ export default function electionStore() {
         description,
         electors,
       });
-      console.log(res);
     },
   };
 }
