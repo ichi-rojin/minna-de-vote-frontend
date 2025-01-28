@@ -80,18 +80,15 @@
 </template>
 
 <script lang="ts" setup>
+import { Exception } from "@/consts/Exception";
+import { IElector } from "@/stores/election";
 import { defineProps, defineEmits, ref, watch } from "vue";
 import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
-interface IElectors {
-  name: string;
-  img: string;
-  nameMsg: string;
-  imgMsg: string;
-}
+
 interface Props {
   maxNumberElectors: number;
   maxNameLength: number;
-  modelValue: Array<IElectors>;
+  modelValue: Array<IElector>;
 }
 const props = defineProps<Props>();
 const emit = defineEmits(["update:modelValue", "errorStackHandler"]);
@@ -141,7 +138,7 @@ const fileChange = (event: Event, index: number) => {
     reader.onload = async () => {
       const result = typeof reader.result === "string" ? reader.result : "";
       if (!result) {
-        throw "UnreadableFile";
+        throw Exception.UNREADABLE_FILE;
       }
       const resizedfile = await ResizeImage(result).catch(
         (error: Error | string) => {

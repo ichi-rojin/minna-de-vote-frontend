@@ -59,6 +59,13 @@
             />
           </div>
         </div>
+        <p
+          v-for="(value, key) in errorMessageList"
+          :key="key"
+          class="text-red-600 text-sm font-semibold"
+        >
+          {{ value }}
+        </p>
         <div class="w-full flex flex-col sm:flex-row sm:justify-center gap-2.5">
           <button
             @click="submit"
@@ -79,6 +86,8 @@
 </template>
 
 <script lang="ts" setup>
+import { Exception } from "@/consts/Exception";
+import { IElector, IErrorStack, IElectionError } from "@/stores/election";
 import { ref, computed } from "vue";
 import ElectionKey from "./key";
 import injector from "@/providers/injector";
@@ -88,20 +97,25 @@ import ElectorsComponent from "./InjectedPostForm/ElectorsComponent.vue";
 
 const title = ref("");
 const description = ref("");
-const electors = ref([
+const electors = ref<Array<IElector>>([
   {
     name: "",
     img: "",
-    msg: "",
+    nameMsg: "",
+    imgMsg: "",
   },
 ]);
 const maxNumberElectors = 20;
 const maxTextLength = 50;
 const maxNameLength = 20;
 
-const errorStack: any = ref({});
+const errorStack = ref<IErrorStack>({
+  title: false,
+  description: false,
+  electors: false,
+});
 const hasErrorStack = computed(() => {
-  return Object.keys(errorStack.value).length !== 0;
+  return Object.values(errorStack.value).filter((v) => v).length !== 0;
 });
 
 const { post } = injector(ElectionKey);
@@ -111,25 +125,41 @@ const titleErrorStack = (bool: boolean) => {
     errorStack.value.title = true;
     return;
   }
-  delete errorStack.value.title;
+  errorStack.value.title = false;
 };
 const descriptionErrorStack = (bool: boolean) => {
   if (bool) {
     errorStack.value.description = true;
     return;
   }
-  delete errorStack.value.description;
+  errorStack.value.description = false;
 };
 const electorsErrorStack = (bool: boolean) => {
   if (bool) {
     errorStack.value.electors = true;
     return;
   }
-  delete errorStack.value.electors;
+  errorStack.value.electors = false;
 };
 
-const submit = () => {
+const errorMessageList = ref<Array<string>>([]);
+
+const submit = async () => {
   if (hasErrorStack.value) return;
-  post(title.value, description.value, electors.value);
+  const response = await post(
+    title.value,
+    description.value,
+    electors.value
+  ).catch((error: Error) => {
+    console.log("Internal Server Error", error);
+    throw Exception.INTERNAL_SERVER_ERROR;
+  });
+  errorMessageList.value = [];
+  const errors: IElectionError = response.data.errors as IElectionError;
+  Object.keys(errors).forEach((key) => {
+    const k: keyof IElectionError = key as keyof IElectionError;
+    const item = errors[k];
+    errorMessageList.value.push(`【${item.code}】${key}は${item.message}`);
+  });
 };
 </script>

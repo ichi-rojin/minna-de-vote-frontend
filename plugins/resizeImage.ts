@@ -1,3 +1,5 @@
+import { Exception } from "@/consts/Exception";
+
 const Base64ToBlob = (base64: string, mime: string) => {
   const base64Data = base64.split(",")[1]; // Base64のデータ部分のみ
   const data = window.atob(base64Data); // base64形式の文字列をデコード
@@ -26,7 +28,7 @@ const loadImage = async (base64: string) => {
 
 export const ErrorHandler = (error: Error | string): string => {
   let msg = "";
-  if (error === "UnreadableFile") {
+  if (error === Exception.UNREADABLE_FILE) {
     msg = "ファイルが読み込めません。";
     console.log(msg);
     return msg;
@@ -51,7 +53,7 @@ export const ResizeImage = async (base64: string): Promise<string> => {
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
   const image = await loadImage(base64).catch(() => {
-    throw "UnreadableFile";
+    throw Exception.UNREADABLE_FILE;
   });
 
   let dstWidth, dstHeight;

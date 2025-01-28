@@ -1,19 +1,36 @@
 import axios from "axios";
 import { ApiUrls } from "@/consts/ApiUrls";
 
-interface Elector {
+export interface IElector {
   name: string;
   img: string;
+  nameMsg: string;
+  imgMsg: string;
+}
+interface IErrorMap {
+  code: number;
+  message: string;
+}
+export interface IElectionError {
+  title: IErrorMap;
+  description: IErrorMap;
+  electors: IErrorMap;
+}
+export interface IErrorStack {
+  title: boolean;
+  description: boolean;
+  electors: boolean;
 }
 interface IPostResponse {
   timestamp: number;
-  electors: Array<Elector>;
+  electors: Array<IElector>;
+  errors: object;
 }
 
 export default function electionStore() {
   return {
-    async post(title: string, description: string, electors: Array<Elector>) {
-      const res = await axios.post<IPostResponse>(ApiUrls.POST_ELECTION, {
+    async post(title: string, description: string, electors: Array<IElector>) {
+      return await axios.post<IPostResponse>(ApiUrls.POST_ELECTION, {
         title,
         description,
         electors,
