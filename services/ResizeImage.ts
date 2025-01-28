@@ -14,7 +14,7 @@ const Base64ToBlob = (base64: string, mime: string) => {
   return blob;
 };
 
-const loadImage = async (base64: string) => {
+const LoadImage = async (base64: string) => {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
     image.crossOrigin = "Anonymous";
@@ -32,7 +32,7 @@ export const ResizeImage = async (base64: string): Promise<string> => {
   const SIZE = 128 * 2;
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
-  const image = await loadImage(base64).catch(() => {
+  const image = await LoadImage(base64).catch(() => {
     throw Exception.UNREADABLE_FILE;
   });
 

@@ -94,6 +94,7 @@ import injector from "@/providers/injector";
 import TitleComponent from "./InjectedPostForm/InputTextComponent.vue";
 import DescriptionComponent from "./InjectedPostForm/InputTextComponent.vue";
 import ElectorsComponent from "./InjectedPostForm/ElectorsComponent.vue";
+import { ErrorHandler } from "@/services/Exception";
 
 const formElements = {
   title: "選挙名",
@@ -157,7 +158,7 @@ const submit = async () => {
     description.value,
     electors.value
   ).catch((error: Error) => {
-    console.log("Internal Server Error", error);
+    ErrorHandler(Exception.INTERNAL_SERVER_ERROR);
     throw Exception.INTERNAL_SERVER_ERROR;
   });
   errorMessageList.value = [];
@@ -166,7 +167,7 @@ const submit = async () => {
     const k: keyof IElectionError = key as keyof IElectionError;
     const item = errors[k];
     errorMessageList.value.push(
-      `【${item.code}】${formElements[key]}は${item.message}`
+      `【${item.code}】${formElements[k]}は${item.message}`
     );
   });
 };

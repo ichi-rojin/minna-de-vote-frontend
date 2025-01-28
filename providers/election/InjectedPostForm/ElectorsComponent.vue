@@ -83,9 +83,9 @@
 import { Exception } from "@/consts/Exception";
 import { IElector } from "@/stores/election";
 import { defineProps, defineEmits, ref, watch } from "vue";
-import { FileLoader } from "@/plugins/FileLoader";
-import { ResizeImage } from "@/plugins/ResizeImage";
-import { ErrorHandler } from "@/plugins/Exception";
+import { FileLoader } from "@/services/FileLoader";
+import { ResizeImage } from "@/services/ResizeImage";
+import { ErrorHandler } from "@/services/Exception";
 
 interface Props {
   maxNumberElectors: number;
