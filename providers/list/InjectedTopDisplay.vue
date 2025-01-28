@@ -12,6 +12,7 @@
           もっと見る
         </a>
       </div>
+      {{ errorMsg }}
       <div
         class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6"
       >
@@ -49,6 +50,11 @@ import injector from "@/providers/injector";
 
 const store = injector(ListKey);
 const list = computed(() => store.list);
+const errorMsg = computed(() => {
+  return store.list.errorcode
+    ? `リストを取得できませんでした。エラーコードは【${store.list.errorcode}】です。`
+    : "";
+});
 
 const getLink = (id: number) => {
   return `/detail/${id}`;

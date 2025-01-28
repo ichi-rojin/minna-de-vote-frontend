@@ -8,6 +8,10 @@
           {{ detail.title }}
         </h2>
       </div>
+      {{ errorMsg }}
+      <p v-if="voteErrorMsg" class="text-red-600 text-sm font-semibold mb-3">
+        {{ voteErrorMsg }}
+      </p>
       <div
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8"
       >
@@ -98,6 +102,11 @@ import { useRoute } from "vue-router";
 
 const store = injector(DetailKey);
 const detail = computed(() => store.detail);
+const errorMsg = computed(() =>
+  store.detail.errorcode
+    ? `リストを取得できませんでした。エラーコードは【${store.detail.errorcode}】です。`
+    : ""
+);
 const results = computed(() =>
   _(store.detail.results).orderBy("votes", "desc").value()
 );
@@ -105,10 +114,19 @@ const voteStore = injector(VoteKey);
 const { get } = injector(VoteKey);
 const route = useRoute();
 
-const isVoted = (vote: number) =>
-  voteStore.history.results.filter((v) => {
+const isVoted = (vote: number) => {
+  if (!voteStore.history?.results) return false;
+  const filtered = voteStore.history.results.filter((v) => {
     return v.vote === vote && parseInt(route.params.id as string) === v.id;
-  }).length > 0;
+  });
+  return filtered.length > 0;
+};
+
+const voteErrorMsg = computed(() =>
+  voteStore.history.errorcode
+    ? `投票できませんでした。エラーコードは【${voteStore.history.errorcode}】です。`
+    : ""
+);
 
 onMounted(() => {
   get();

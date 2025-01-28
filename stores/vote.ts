@@ -8,12 +8,14 @@ interface History {
 }
 interface IPostResponse {
   timestamp: number;
+  errorcode: number;
   results: Array<History>;
 }
 
 export default function voteStore() {
   const history: IPostResponse = reactive({
     timestamp: 0,
+    errorcode: 0,
     results: [],
   });
 
@@ -34,6 +36,7 @@ export default function voteStore() {
         vote,
       });
       history.timestamp = res.data.timestamp;
+      history.errorcode = res.data.errorcode;
       history.results = res.data.results;
     },
   };

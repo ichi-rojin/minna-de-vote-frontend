@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded-lg p-4">
+  <div v-if="hasResults" class="border rounded-lg p-4">
     <div class="text-gray-800 text-lg lg:text-xl font-bold mb-3">
       現在の投票結果
     </div>
@@ -50,6 +50,7 @@ const store = injector(DetailKey);
 const results = computed(() =>
   _(store.detail.results).orderBy("votes", "desc").value()
 );
+const hasResults = computed(() => results.value.length > 0);
 const total = computed(() => _(store.detail.results).sumBy("votes"));
 const topGroup = computed(() => _.slice(results.value, 0, 3));
 const subGroup = computed(() =>

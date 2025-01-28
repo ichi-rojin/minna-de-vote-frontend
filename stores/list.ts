@@ -13,6 +13,7 @@ interface IList {
 }
 interface IGetResponse {
   timestamp: number;
+  errorcode: number;
   title: string;
   results: Array<IList>;
 }
@@ -20,6 +21,7 @@ interface IGetResponse {
 export default function listStore() {
   const list: IGetResponse = reactive({
     timestamp: 0,
+    errorcode: 0,
     title: "",
     results: [],
   });
@@ -32,6 +34,7 @@ export default function listStore() {
     async fetch() {
       const res = await axios.get<IGetResponse>(ApiUrls.GET_LIST);
       list.timestamp = res.data.timestamp;
+      list.errorcode = res.data.errorcode;
       list.title = res.data.title;
       list.results = res.data.results;
     },

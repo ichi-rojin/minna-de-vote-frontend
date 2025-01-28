@@ -26,11 +26,12 @@ const store = injector(VoteKey);
 const { post } = injector(VoteKey);
 const route = useRoute();
 
-const election = computed(() =>
-  store.history.results.filter((e) => {
+const election = computed(() => {
+  if (!store.history.results) return [];
+  return store.history.results.filter((e) => {
     return e.id === parseInt(route.params.id as string);
-  })
-);
+  });
+});
 const enabledVote = computed(() => election.value.length < 1);
 const isVoted = computed(
   () =>
