@@ -32,7 +32,7 @@
             for="description"
             class="inline-block text-gray-800 text-sm sm:text-base mb-2"
           >
-            説明文
+            {{ formElements.description }}
           </label>
           <DescriptionComponent
             v-model="description"
@@ -47,7 +47,7 @@
             for="electors"
             class="inline-block text-gray-800 text-sm sm:text-base mb-2"
           >
-            候補者
+            {{ formElements.electors }}
           </label>
           <div class="grid gap-4">
             <ElectorsComponent
@@ -94,6 +94,12 @@ import injector from "@/providers/injector";
 import TitleComponent from "./InjectedPostForm/InputTextComponent.vue";
 import DescriptionComponent from "./InjectedPostForm/InputTextComponent.vue";
 import ElectorsComponent from "./InjectedPostForm/ElectorsComponent.vue";
+
+const formElements = {
+  title: "選挙名",
+  description: "説明文",
+  electors: "候補者",
+};
 
 const title = ref("");
 const description = ref("");
@@ -159,7 +165,9 @@ const submit = async () => {
   Object.keys(errors).forEach((key) => {
     const k: keyof IElectionError = key as keyof IElectionError;
     const item = errors[k];
-    errorMessageList.value.push(`【${item.code}】${key}は${item.message}`);
+    errorMessageList.value.push(
+      `【${item.code}】${formElements[key]}は${item.message}`
+    );
   });
 };
 </script>
