@@ -26,26 +26,6 @@ const loadImage = async (base64: string) => {
   });
 };
 
-export const ErrorHandler = (error: Error | string): string => {
-  let msg = "";
-  if (error === Exception.UNREADABLE_FILE) {
-    msg = "ファイルが読み込めません。";
-    console.log(msg);
-    return msg;
-  } else if (error instanceof Error) {
-    msg = error.message;
-    console.log(msg);
-    return msg;
-  } else if (typeof error === "string") {
-    msg = error;
-    console.log(error);
-    return msg;
-  }
-  msg = "想定外のエラーです。";
-  console.log(msg);
-  return msg;
-};
-
 export const ResizeImage = async (base64: string): Promise<string> => {
   const mime = base64.split(";")[0].split("data:")[1];
 

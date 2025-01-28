@@ -83,7 +83,9 @@
 import { Exception } from "@/consts/Exception";
 import { IElector } from "@/stores/election";
 import { defineProps, defineEmits, ref, watch } from "vue";
-import { ResizeImage, ErrorHandler } from "@/plugins/resizeImage";
+import { FileLoader } from "@/plugins/FileLoader";
+import { ResizeImage } from "@/plugins/ResizeImage";
+import { ErrorHandler } from "@/plugins/Exception";
 
 interface Props {
   maxNumberElectors: number;
@@ -120,7 +122,7 @@ const removeElector = (i: number) => {
     props.modelValue.filter((item, index) => index !== i)
   );
 };
-const fileChange = (event: Event, index: number) => {
+const fileChange = async (event: Event, index: number) => {
   const showErrorMsg = (msg: string) => {
     props.modelValue.map((item, i) => {
       if (i == index) {
@@ -130,33 +132,34 @@ const fileChange = (event: Event, index: number) => {
     });
   };
 
-  try {
-    const target = event.target as HTMLInputElement;
-    const file = (target.files as FileList)[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const result = typeof reader.result === "string" ? reader.result : "";
-      if (!result) {
-        throw Exception.UNREADABLE_FILE;
-      }
-      const resizedfile = await ResizeImage(result).catch(
-        (error: Error | string) => {
-          showErrorMsg(ErrorHandler(error));
-        }
-      );
-      emit(
-        "update:modelValue",
-        props.modelValue.map((item, i) => {
-          if (i !== index) return item;
-          item.img = String(resizedfile);
-          return item;
-        })
-      );
-    };
-  } catch (error: Error | string) {
+  const target = event.target as HTMLInputElement;
+  const reader = await FileLoader(target).catch((error: Error | string) => {
     showErrorMsg(ErrorHandler(error));
+    throw error;
+  });
+
+  const result = reader.result;
+  if (typeof result !== "string") {
+    showErrorMsg(ErrorHandler(Exception.UNREADABLE_FILE));
+    throw Exception.UNREADABLE_FILE;
   }
+
+  const resizedfile = await ResizeImage(result).catch(
+    (error: Error | string) => {
+      showErrorMsg(ErrorHandler(error));
+      throw error;
+    }
+  );
+
+  emit(
+    "update:modelValue",
+    props.modelValue.map((item, i) => {
+      if (i !== index) return item;
+      item.img = resizedfile as string;
+      return item;
+    })
+  );
+
   showErrorMsg("");
 };
 
