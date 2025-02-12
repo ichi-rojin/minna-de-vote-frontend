@@ -99,9 +99,6 @@
       <InjectedFetch />
       <InjectedTopDisplay />
     </ListProvider>
-    <ElectionProvider>
-      <InjectedPostForm />
-    </ElectionProvider>
   </div>
 </template>
 
