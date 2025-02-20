@@ -12,6 +12,6 @@ defineExpose({
 });
 
 onMounted(() => {
-  fetch(parseInt(route.params.id as string));
+  fetch(route.params.id as string);
 });
 </script>

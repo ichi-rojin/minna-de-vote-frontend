@@ -42,7 +42,7 @@ export default function detailStore() {
       return history;
     },
 
-    async fetch(id: number) {
+    async fetch(id: string) {
       const res = await axios.get<IGetResponse>(ApiUrls.GET_DETAIL + `/${id}`);
       detail.timestamp = res.data.timestamp;
       detail.errorcode = res.data.errorcode;
@@ -50,7 +50,7 @@ export default function detailStore() {
       detail.results = res.data.results;
     },
 
-    async post(id: number, vote: number) {
+    async post(id: string, vote: number) {
       const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,
