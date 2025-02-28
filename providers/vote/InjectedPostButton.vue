@@ -18,7 +18,7 @@ import injector from "@/providers/injector";
 import { useRoute } from "vue-router";
 
 interface Props {
-  vote: number;
+  vote: string;
 }
 const props = defineProps<Props>();
 
@@ -29,7 +29,7 @@ const route = useRoute();
 const election = computed(() => {
   if (!store.history.results) return [];
   return store.history.results.filter((e) => {
-    return e.id === parseInt(route.params.id as string);
+    return e.id === route.params.id;
   });
 });
 const enabledVote = computed(() => election.value.length < 1);
@@ -41,6 +41,6 @@ const isVoted = computed(
 );
 
 const vote = () => {
-  post(parseInt(route.params.id as string), props.vote);
+  post(route.params.id as string, props.vote as string);
 };
 </script>
