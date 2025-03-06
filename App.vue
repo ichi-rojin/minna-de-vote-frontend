@@ -1,4 +1,7 @@
 <template>
+  <AuthProvider>
+    <InjectedAuth />
+  </AuthProvider>
   <div class="bg-white pb-6 sm:pb-8 lg:pb-12" ref="vHtmlElement">
     <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
       <header class="flex justify-between items-center py-4 md:py-8">
@@ -144,3 +147,8 @@
     </footer>
   </div>
 </template>
+
+<script lang="ts" setup>
+import AuthProvider from "@/providers/auth/AuthProvider.vue";
+import InjectedAuth from "@/providers/auth/InjectedAuth.vue";
+</script>
