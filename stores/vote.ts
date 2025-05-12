@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import axios from "axios";
+import apiClient from "@/providers/apiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface History {
@@ -25,13 +25,13 @@ export default function voteStore() {
     },
 
     async get() {
-      const res = await axios.get<IPostResponse>(ApiUrls.GET_VOTE);
+      const res = await apiClient.get<IPostResponse>(ApiUrls.GET_VOTE);
       history.timestamp = res.data.timestamp;
       history.results = res.data.results;
     },
 
     async post(id: string, vote: string) {
-      const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
+      const res = await apiClient.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,
       });
