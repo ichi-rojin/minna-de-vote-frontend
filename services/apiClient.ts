@@ -7,6 +7,7 @@ import {
   connectAuthEmulator,
   signInWithCustomToken,
 } from "firebase/auth";
+import { ApiUrls } from "@/consts/ApiUrls";
 
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
@@ -33,19 +34,22 @@ async function fetchIdToken(): Promise<string> {
   }
 
   if (!tokenPromise) {
-    const fid = await getId(getInstallations(app));
+    // 最初の1回だけ走る
+    tokenPromise = (async () => {
+      const fid = await getId(getInstallations(app));
 
-    const res = await axios.post(
-      "/api/auth",
-      {},
-      {
-        headers: { "X-Firebase-Installations-ID": fid },
-      }
-    );
+      const res = await axios.post(
+        ApiUrls.POST_AUTH,
+        {},
+        {
+          headers: { "X-Firebase-Installations-ID": fid },
+        }
+      );
 
-    const { token } = res.data;
-    const userCred = await signInWithCustomToken(auth, token);
-    tokenPromise = Promise.resolve(await userCred.user.getIdToken());
+      const { token } = res.data;
+      const userCred = await signInWithCustomToken(auth, token);
+      return await userCred.user.getIdToken();
+    })();
   }
 
   return tokenPromise;
@@ -55,6 +59,17 @@ apiClient.interceptors.request.use(async (config) => {
   config.headers = config.headers ?? {};
   const idToken = await fetchIdToken();
   config.headers["Authorization"] = `Bearer ${idToken}`;
+
+  // CSRFトークン
+  if (config.method?.toUpperCase() !== "GET") {
+    const csrf_token =
+      document
+        .querySelector("meta[name=csrf-token]")
+        ?.getAttribute("content") ?? "";
+    config.headers["X-CSRF-Token"] = csrf_token;
+    config.headers["X-Requested-With"] = "XMLHttpRequest";
+  }
+
   return config;
 });
 

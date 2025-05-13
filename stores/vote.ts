@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import apiClient from "@/providers/apiClient";
+import apiClient from "@/services/apiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface History {

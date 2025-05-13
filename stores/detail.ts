@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import axios from "axios";
+import apiClient from "@/services/apiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface IDetail {
@@ -43,7 +43,9 @@ export default function detailStore() {
     },
 
     async fetch(id: string) {
-      const res = await axios.get<IGetResponse>(ApiUrls.GET_DETAIL + `/${id}`);
+      const res = await apiClient.get<IGetResponse>(
+        ApiUrls.GET_DETAIL + `/${id}`
+      );
       detail.timestamp = res.data.timestamp;
       detail.errorcode = res.data.errorcode;
       detail.title = res.data.title;
@@ -51,7 +53,7 @@ export default function detailStore() {
     },
 
     async post(id: string, vote: number) {
-      const res = await axios.post<IPostResponse>(ApiUrls.POST_VOTE, {
+      const res = await apiClient.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,
       });

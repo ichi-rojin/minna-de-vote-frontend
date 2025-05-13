@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import axios from "axios";
+import apiClient from "@/services/apiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface IList {
@@ -32,7 +32,7 @@ export default function listStore() {
     },
 
     async fetch() {
-      const res = await axios.get<IGetResponse>(ApiUrls.GET_LIST);
+      const res = await apiClient.get<IGetResponse>(ApiUrls.GET_LIST);
       list.timestamp = res.data.timestamp;
       list.errorcode = res.data.errorcode;
       list.title = res.data.title;
