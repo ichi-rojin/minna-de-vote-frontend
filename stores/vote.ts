@@ -6,14 +6,14 @@ interface History {
   id: string;
   vote: string;
 }
-interface IPostResponse {
+interface IResponse {
   timestamp: number;
   errorcode: number;
   results: Array<History>;
 }
 
 export default function voteStore() {
-  const history: IPostResponse = reactive({
+  const history: IResponse = reactive({
     timestamp: 0,
     errorcode: 0,
     results: [],
@@ -25,13 +25,13 @@ export default function voteStore() {
     },
 
     async get() {
-      const res = await apiClient.get<IPostResponse>(ApiUrls.GET_VOTE);
+      const res = await apiClient.get<IResponse>(ApiUrls.GET_VOTE);
       history.timestamp = res.data.timestamp;
       history.results = res.data.results;
     },
 
     async post(id: string, vote: string) {
-      const res = await apiClient.post<IPostResponse>(ApiUrls.POST_VOTE, {
+      const res = await apiClient.post<IResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,
       });
