@@ -1,4 +1,4 @@
-import { AuthRepository } from "../AuthRepository";
+import { IAuthStrategy } from "../IAuthStrategy";
 import {
   getAuth,
   connectAuthEmulator,
@@ -27,7 +27,7 @@ if (process.env.VUE_APP_FIREBASE_AUTH_EMU_URL) {
 
 let tokenPromise: Promise<string> | null = null;
 
-export class FirebaseAuthRepository implements AuthRepository {
+export class FirebaseAuthStrategy implements IAuthStrategy {
   async getIdToken(): Promise<string> {
     if (auth.currentUser) {
       return await auth.currentUser.getIdToken();

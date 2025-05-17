@@ -1,14 +1,14 @@
 import axios from "axios";
-import { AuthRepository } from "@/repositories/AuthRepository";
-import { createAuthRepository } from "@/repositories/AuthRepositoryFactory";
+import { IAuthStrategy } from "@/strategies/auth/IAuthStrategy";
+import { createAuthStrategy } from "@/strategies/auth/AuthStrategyFactory";
 
 const apiClient = axios.create();
 
-let authRepositoryPromise: Promise<AuthRepository> | null = null;
+let authRepositoryPromise: Promise<IAuthStrategy> | null = null;
 
-function getAuthRepository(): Promise<AuthRepository> {
+function getAuthRepository(): Promise<IAuthStrategy> {
   if (!authRepositoryPromise) {
-    authRepositoryPromise = createAuthRepository();
+    authRepositoryPromise = createAuthStrategy();
   }
   return authRepositoryPromise;
 }
