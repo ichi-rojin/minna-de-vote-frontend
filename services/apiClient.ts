@@ -4,20 +4,20 @@ import { createAuthStrategy } from "@/strategies/auth/AuthStrategyFactory";
 
 const apiClient = axios.create();
 
-let authRepositoryPromise: Promise<IAuthStrategy> | null = null;
+let authStrategyPromise: Promise<IAuthStrategy> | null = null;
 
-function getAuthRepository(): Promise<IAuthStrategy> {
-  if (!authRepositoryPromise) {
-    authRepositoryPromise = createAuthStrategy();
+function getAuthStrategy(): Promise<IAuthStrategy> {
+  if (!authStrategyPromise) {
+    authStrategyPromise = createAuthStrategy();
   }
-  return authRepositoryPromise;
+  return authStrategyPromise;
 }
 
 apiClient.interceptors.request.use(async (config) => {
-  const authRepository = await getAuthRepository();
+  const authStrategy = await getAuthStrategy();
   config.headers = config.headers ?? {};
 
-  const idToken = await authRepository.getIdToken();
+  const idToken = await authStrategy.getIdToken();
   config.headers["Authorization"] = `Bearer ${idToken}`;
 
   if (config.method?.toUpperCase() !== "GET") {
