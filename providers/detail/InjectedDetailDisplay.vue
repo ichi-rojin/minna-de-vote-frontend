@@ -114,10 +114,10 @@ const voteStore = injector(VoteKey);
 const { get } = injector(VoteKey);
 const route = useRoute();
 
-const isVoted = (vote: number) => {
+const isVoted = (vote: string) => {
   if (!voteStore.history?.results) return false;
   const filtered = voteStore.history.results.filter((v) => {
-    return v.vote === vote && parseInt(route.params.id as string) === v.id;
+    return v.vote === vote && route.params.id === v.id;
   });
   return filtered.length > 0;
 };

@@ -3,7 +3,7 @@ import apiClient from "@/services/apiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface IDetail {
-  id: number;
+  id: string;
   name: string;
   party: string;
   img: string;
