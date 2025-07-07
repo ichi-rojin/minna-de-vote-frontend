@@ -46,13 +46,15 @@
 <script lang="ts" setup>
 import { computed } from "vue";
 import ListKey from "./key";
+import ErrorKey from "../error/key";
 import injector from "@/providers/injector";
 
 const store = injector(ListKey);
+const errorStore = injector(ErrorKey);
 const list = computed(() => store.list);
 const errorMsg = computed(() => {
-  return store.list.errorcode
-    ? `リストを取得できませんでした。エラーコードは【${store.list.errorcode}】です。`
+  return errorStore.error.code
+    ? `リストを取得できませんでした。エラーコードは【${errorStore.error.code}】です。`
     : "";
 });
 
