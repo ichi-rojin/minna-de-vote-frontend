@@ -11,7 +11,6 @@ interface IDetail {
 }
 interface IGetResponse {
   timestamp: number;
-  errorcode: number;
   title: string;
   results: Array<IDetail>;
 }
@@ -23,7 +22,6 @@ interface IPostResponse {
 export default function detailStore() {
   const detail: IGetResponse = reactive({
     timestamp: 0,
-    errorcode: 0,
     title: "",
     results: [],
   });
@@ -47,7 +45,6 @@ export default function detailStore() {
         ApiUrls.GET_DETAIL + `/${id}`
       );
       detail.timestamp = res.data.timestamp;
-      detail.errorcode = res.data.errorcode;
       detail.title = res.data.title;
       detail.results = res.data.results;
     },
