@@ -2,13 +2,13 @@ import { reactive } from "vue";
 
 interface IError {
   code: number;
-  messages: Array<string>;
+  message: Array<string>;
 }
 
 export default function errorStore() {
   const error: IError = reactive({
     code: 0,
-    messages: [],
+    message: [],
   });
 
   return {

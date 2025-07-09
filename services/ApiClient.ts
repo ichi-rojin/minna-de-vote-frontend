@@ -41,18 +41,13 @@ ApiClient.interceptors.response.use(
   (error) => {
     const { response } = error;
     if (response) {
-      const errData = response.data;
-      ErrorStoreInstance.error.code = errData.code ?? response.status;
-      ErrorStoreInstance.error.messages = Array.isArray(errData.messages)
-        ? errData.messages
-        : [errData.message || "unknown error"];
+      ErrorStoreInstance.error.code = response.status;
+      ErrorStoreInstance.error.message = response.statusText;
     } else {
       // サーバから応答なし（ネットワークエラー等）
       ErrorStoreInstance.error.code = 0;
-      ErrorStoreInstance.error.messages = ["Network error or no response"];
+      ErrorStoreInstance.error.message = ["Network error or no response"];
     }
-
-    console.log("errorStoreInstance", ErrorStoreInstance.error);
 
     return Promise.reject(error);
   }

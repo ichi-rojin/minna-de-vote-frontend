@@ -4,13 +4,11 @@
 
 <script lang="ts" setup>
 import { computed } from "vue";
-import ErrorKey from "./key";
-import injector from "@/providers/injector";
+import { ErrorStoreInstance } from "@/services/Error";
 
-const store = injector(ErrorKey);
 const errorMsg = computed(() => {
-  return store.error.code
-    ? `リストを取得できませんでした。エラーコードは【${store.error.code}】です。`
+  return ErrorStoreInstance.error.code
+    ? `リストを取得できませんでした。エラーコードは【${ErrorStoreInstance.error.code} : ${ErrorStoreInstance.error.message}】です。`
     : "";
 });
 </script>
