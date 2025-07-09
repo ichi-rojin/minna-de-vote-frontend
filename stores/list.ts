@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import apiClient from "@/services/apiClient";
+import ApiClient from "@/services/ApiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface IList {
@@ -30,7 +30,7 @@ export default function listStore() {
     },
 
     async fetch() {
-      const res = await apiClient.get<IGetResponse>(ApiUrls.GET_LIST);
+      const res = await ApiClient.get<IGetResponse>(ApiUrls.GET_LIST);
       list.timestamp = res.data.timestamp;
       list.title = res.data.title;
       list.results = res.data.results;

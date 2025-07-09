@@ -1,5 +1,5 @@
 import { reactive } from "vue";
-import apiClient from "@/services/apiClient";
+import ApiClient from "@/services/ApiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 interface IDetail {
@@ -41,7 +41,7 @@ export default function detailStore() {
     },
 
     async fetch(id: string) {
-      const res = await apiClient.get<IGetResponse>(
+      const res = await ApiClient.get<IGetResponse>(
         ApiUrls.GET_DETAIL + `/${id}`
       );
       detail.timestamp = res.data.timestamp;
@@ -50,7 +50,7 @@ export default function detailStore() {
     },
 
     async post(id: string, vote: number) {
-      const res = await apiClient.post<IPostResponse>(ApiUrls.POST_VOTE, {
+      const res = await ApiClient.post<IPostResponse>(ApiUrls.POST_VOTE, {
         id,
         vote,
       });

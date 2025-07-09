@@ -1,4 +1,4 @@
-import apiClient from "@/services/apiClient";
+import ApiClient from "@/services/ApiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
 export interface IElector {
@@ -30,7 +30,7 @@ interface IPostResponse {
 export default function electionStore() {
   return {
     async post(title: string, description: string, electors: Array<IElector>) {
-      return await apiClient.post<IPostResponse>(ApiUrls.POST_ELECTION, {
+      return await ApiClient.post<IPostResponse>(ApiUrls.POST_ELECTION, {
         title,
         description,
         electors,

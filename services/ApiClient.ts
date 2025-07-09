@@ -2,7 +2,9 @@ import axios from "axios";
 import { IAuthStrategy } from "@/strategies/auth/IAuthStrategy";
 import { createAuthStrategy } from "@/strategies/auth/AuthStrategyFactory";
 
-const apiClient = axios.create();
+import { ErrorStoreInstance } from "@/services/Error";
+
+const ApiClient = axios.create();
 
 let authStrategyPromise: Promise<IAuthStrategy> | null = null;
 
@@ -13,7 +15,7 @@ function getAuthStrategy(): Promise<IAuthStrategy> {
   return authStrategyPromise;
 }
 
-apiClient.interceptors.request.use(async (config) => {
+ApiClient.interceptors.request.use(async (config) => {
   const authStrategy = await getAuthStrategy();
   config.headers = config.headers ?? {};
 
@@ -32,4 +34,28 @@ apiClient.interceptors.request.use(async (config) => {
   return config;
 });
 
-export default apiClient;
+ApiClient.interceptors.response.use(
+  // 正常時
+  (response) => response,
+  // 異常時
+  (error) => {
+    const { response } = error;
+    if (response) {
+      const errData = response.data;
+      ErrorStoreInstance.error.code = errData.code ?? response.status;
+      ErrorStoreInstance.error.messages = Array.isArray(errData.messages)
+        ? errData.messages
+        : [errData.message || "unknown error"];
+    } else {
+      // サーバから応答なし（ネットワークエラー等）
+      ErrorStoreInstance.error.code = 0;
+      ErrorStoreInstance.error.messages = ["Network error or no response"];
+    }
+
+    console.log("errorStoreInstance", ErrorStoreInstance.error);
+
+    return Promise.reject(error);
+  }
+);
+
+export default ApiClient;
