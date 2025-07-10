@@ -1,5 +1,7 @@
 <template>
-  {{ errorMsg }}
+  <div v-if="errorMsg">
+    <p>{{ errorMsg }}</p>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -12,3 +14,15 @@ const errorMsg = computed(() => {
     : "";
 });
 </script>
+<style scoped>
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f00;
+  padding: 1em;
+  p {
+    color: #fff;
+  }
+}
+</style>
