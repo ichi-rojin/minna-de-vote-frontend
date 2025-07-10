@@ -5,16 +5,24 @@ interface IError {
   message: Array<string>;
 }
 
+const initialState: IError = {
+  code: 0,
+  message: [],
+};
+
 export default function errorStore() {
-  const error: IError = reactive({
-    code: 0,
-    message: [],
-  });
+  const error: IError = reactive({ ...initialState });
+
+  const reset = () => {
+    Object.assign(error, initialState);
+  };
 
   return {
     get error() {
       return error;
     },
+
+    reset,
   };
 }
 

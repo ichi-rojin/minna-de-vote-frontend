@@ -1,5 +1,5 @@
 <template>
-  {{ errorMsg }}
+  <ErrorComponent />
   <div
     class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 sm:gap-12 xl:gap-16"
   >
@@ -44,17 +44,14 @@
 </template>
 
 <script lang="ts" setup>
+import ErrorComponent from "@/components/ErrorComponent.vue";
+
 import { computed } from "vue";
 import ListKey from "./key";
 import injector from "@/providers/injector";
 
 const store = injector(ListKey);
 const list = computed(() => store.list);
-const errorMsg = computed(() => {
-  return store.list.errorcode
-    ? `リストを取得できませんでした。エラーコードは【${store.list.errorcode}】です。`
-    : "";
-});
 
 const getLink = (id: number) => {
   return `/detail/${id}`;

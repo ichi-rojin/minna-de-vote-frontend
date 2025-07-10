@@ -8,10 +8,7 @@
           {{ detail.title }}
         </h2>
       </div>
-      {{ errorMsg }}
-      <p v-if="voteErrorMsg" class="text-red-600 text-sm font-semibold mb-3">
-        {{ voteErrorMsg }}
-      </p>
+      <ErrorComponent />
       <div
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8"
       >
@@ -92,6 +89,8 @@
 </template>
 
 <script lang="ts" setup>
+import ErrorComponent from "@/components/ErrorComponent.vue";
+
 import _ from "lodash";
 import { computed, onMounted } from "vue";
 import InjectedPostButton from "../vote/InjectedPostButton.vue";
@@ -102,11 +101,6 @@ import { useRoute } from "vue-router";
 
 const store = injector(DetailKey);
 const detail = computed(() => store.detail);
-const errorMsg = computed(() =>
-  store.detail.errorcode
-    ? `リストを取得できませんでした。エラーコードは【${store.detail.errorcode}】です。`
-    : ""
-);
 const results = computed(() =>
   _(store.detail.results).orderBy("votes", "desc").value()
 );
@@ -121,12 +115,6 @@ const isVoted = (vote: string) => {
   });
   return filtered.length > 0;
 };
-
-const voteErrorMsg = computed(() =>
-  voteStore.history.errorcode
-    ? `投票できませんでした。エラーコードは【${voteStore.history.errorcode}】です。`
-    : ""
-);
 
 onMounted(() => {
   get();

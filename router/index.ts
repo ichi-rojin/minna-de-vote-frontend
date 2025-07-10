@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { ErrorStoreInstance } from "@/services/Error";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -21,6 +22,11 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.VUE_BASE_PATH),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  ErrorStoreInstance.reset();
+  next();
 });
 
 export default router;
