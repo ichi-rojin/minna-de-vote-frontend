@@ -1,9 +1,13 @@
 <template>
-  <div class="bg-white py-6 sm:py-8 lg:py-12">
+  <div
+    class="bg-white py-6 sm:py-8 lg:py-12"
+    v-for="(group, gkey) in groups"
+    :key="gkey"
+  >
     <div class="max-w-screen-2xl px-4 md:px-8 px-0 mx-auto">
       <div class="flex justify-between items-end gap-4 mb-6">
         <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold">
-          {{ list.title }} 注目の選挙区
+          {{ group.title }} 注目の選挙区
         </h2>
         <a
           href="/list"
@@ -16,7 +20,7 @@
       <div
         class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-6 gap-y-6"
       >
-        <div v-for="(value, key) in list.results" :key="key">
+        <div v-for="(value, key) in group.results" :key="key">
           <a
             :href="getLink(value.id)"
             class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
@@ -47,13 +51,13 @@
 import ErrorComponent from "@/components/ErrorComponent.vue";
 
 import { computed } from "vue";
-import ListKey from "./key";
+import GroupKey from "./key";
 import injector from "@/providers/injector";
 
-const store = injector(ListKey);
-const list = computed(() => store.list);
+const store = injector(GroupKey);
+const groups = computed(() => store.groups);
 
-const getLink = (id: number) => {
+const getLink = (id: string) => {
   return `/detail/${id}`;
 };
 </script>

@@ -95,15 +95,15 @@
         </div>
       </div>
     </div>
-    <ListProvider>
+    <GroupProvider>
       <InjectedFetch />
       <InjectedTopDisplay />
-    </ListProvider>
+    </GroupProvider>
   </div>
 </template>
 
 <script lang="ts" setup>
-import ListProvider from "@/providers/list/ListProvider.vue";
-import InjectedTopDisplay from "@/providers/list/InjectedTopDisplay.vue";
-import InjectedFetch from "@/providers/list/InjectedFetch.vue";
+import GroupProvider from "@/providers/group/GroupProvider.vue";
+import InjectedTopDisplay from "@/providers/group/InjectedTopDisplay.vue";
+import InjectedFetch from "@/providers/group/InjectedFetch.vue";
 </script>

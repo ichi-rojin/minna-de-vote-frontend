@@ -2,8 +2,8 @@ import { reactive } from "vue";
 import ApiClient from "@/services/ApiClient";
 import { ApiUrls } from "@/consts/ApiUrls";
 
-interface IList {
-  id: number;
+interface IElection {
+  id: string;
   createdAt: string;
   updatedAt: string;
   date: string;
@@ -11,18 +11,9 @@ interface IList {
   title: string;
   img: string;
 }
-interface IGetResponse {
-  timestamp: number;
-  title: string;
-  results: Array<IList>;
-}
 
 export default function listStore() {
-  const list: IGetResponse = reactive({
-    timestamp: 0,
-    title: "",
-    results: [],
-  });
+  const list: Array<IElection> = reactive([]);
 
   return {
     get list() {
@@ -30,10 +21,8 @@ export default function listStore() {
     },
 
     async fetch() {
-      const res = await ApiClient.get<IGetResponse>(ApiUrls.GET_LIST);
-      list.timestamp = res.data.timestamp;
-      list.title = res.data.title;
-      list.results = res.data.results;
+      const res = await ApiClient.get<Array<IElection>>(ApiUrls.GET_LIST);
+      list.splice(0, list.length, ...res.data);
     },
   };
 }

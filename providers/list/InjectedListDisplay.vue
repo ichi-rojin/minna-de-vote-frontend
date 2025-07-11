@@ -4,7 +4,7 @@
     class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 sm:gap-12 xl:gap-16"
   >
     <div
-      v-for="(value, key) in list.results"
+      v-for="(value, key) in list"
       :key="key"
       class="flex flex-col md:flex-row items-center gap-4 lg:gap-6"
     >
@@ -20,7 +20,6 @@
         />
       </a>
       <div class="flex flex-col gap-2">
-        <span class="text-gray-100 text-xs">{{ list.title }}</span>
         <span class="text-gray-400 text-sm">期日:{{ value.date }}</span>
         <h2 class="text-gray-800 text-xl font-bold">
           <a
@@ -53,7 +52,7 @@ import injector from "@/providers/injector";
 const store = injector(ListKey);
 const list = computed(() => store.list);
 
-const getLink = (id: number) => {
+const getLink = (id: string) => {
   return `/detail/${id}`;
 };
 </script>
