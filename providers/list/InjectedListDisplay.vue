@@ -1,5 +1,4 @@
 <template>
-  <ErrorComponent />
   <div
     class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 sm:gap-12 xl:gap-16"
   >
@@ -43,8 +42,6 @@
 </template>
 
 <script lang="ts" setup>
-import ErrorComponent from "@/components/ErrorComponent.vue";
-
 import { computed } from "vue";
 import ListKey from "./key";
 import injector from "@/providers/injector";

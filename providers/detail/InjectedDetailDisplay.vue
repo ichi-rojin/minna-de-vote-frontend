@@ -8,7 +8,6 @@
           {{ detail.title }}
         </h2>
       </div>
-      <ErrorComponent />
       <div
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8"
       >
@@ -89,8 +88,6 @@
 </template>
 
 <script lang="ts" setup>
-import ErrorComponent from "@/components/ErrorComponent.vue";
-
 import _ from "lodash";
 import { computed, onMounted } from "vue";
 import InjectedPostButton from "../vote/InjectedPostButton.vue";

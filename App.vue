@@ -143,4 +143,9 @@
       </div>
     </footer>
   </div>
+  <ErrorComponent />
 </template>
+
+<script lang="ts" setup>
+import ErrorComponent from "@/components/ErrorComponent.vue";
+</script>
