@@ -21,7 +21,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-if (process.env.VUE_APP_FIREBASE_AUTH_EMU_URL) {
+if (process.env.NODE_ENV === "local") {
   connectAuthEmulator(auth, process.env.VUE_APP_FIREBASE_AUTH_EMU_URL);
 }
 
