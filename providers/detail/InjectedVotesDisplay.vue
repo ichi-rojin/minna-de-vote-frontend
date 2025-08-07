@@ -3,7 +3,9 @@
     <div class="text-gray-800 text-lg lg:text-xl font-bold mb-3">
       現在の投票結果
     </div>
-    <span class="block text-gray-500 text-sm pb-5 border-b" v-if="false">現在の投票数 {{ total }}</span>
+    <span class="block text-gray-500 text-sm pb-5 border-b" v-if="false">
+      現在の投票数 {{ total }}
+    </span>
     <div class="flex flex-col gap-2 mt-5">
       <div
         v-for="(value, key) in topGroup"
