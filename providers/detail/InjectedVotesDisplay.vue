@@ -3,8 +3,8 @@
     <div class="text-gray-800 text-lg lg:text-xl font-bold mb-3">
       現在の投票結果
     </div>
-    <span class="block text-gray-500 text-sm">現在の投票数 {{ total }}</span>
-    <div class="flex flex-col border-t border-b gap-2 py-5 my-5">
+    <span class="block text-gray-500 text-sm pb-5 border-b" v-if="false">現在の投票数 {{ total }}</span>
+    <div class="flex flex-col gap-2 mt-5">
       <div
         v-for="(value, key) in topGroup"
         :key="key"
@@ -32,12 +32,6 @@
         </div>
       </div>
     </div>
-    <a
-      href="#"
-      @click="$router.back()"
-      class="block bg-white hover:bg-gray-100 active:bg-gray-200 focus-visible:ring ring-indigo-300 border text-gray-500 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 md:px-8 py-2 md:py-3"
-      >戻る</a
-    >
   </div>
 </template>
 
