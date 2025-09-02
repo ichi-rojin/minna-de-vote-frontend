@@ -21,11 +21,13 @@
             class="w-24 md:w-32 h-24 md:h-32 bg-gray-200 rounded-full overflow-hidden shadow-lg mb-2 md:mb-4"
           >
             <img
+              v-if="value.img"
               :src="value.img"
               :alt="value.party + ' ' + value.name"
               loading="lazy"
               class="w-full h-full object-cover object-center"
             />
+            <span v-else class="flex items-center justify-center h-full">No Image</span>
           </div>
           <div>
             <div

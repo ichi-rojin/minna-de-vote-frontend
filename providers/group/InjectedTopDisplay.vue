@@ -25,11 +25,13 @@
             class="group h-96 block bg-gray-100 rounded-lg overflow-hidden shadow-lg mb-2 lg:mb-3"
           >
             <img
+              v-if="value.img"
               :src="value.img"
               loading="lazy"
               alt="Photo by Austin Wade"
               class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
             />
+            <span v-else class="flex items-center justify-center h-full">No Image</span>
           </a>
           <div class="flex flex-col">
             <span class="text-gray-500">{{ value.copy }}</span>
