@@ -18,7 +18,9 @@
           alt="Photo by Minh Pham"
           class="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200"
         />
-        <span v-else class="flex items-center justify-center h-full">No Image</span>
+        <span v-else class="flex items-center justify-center h-full"
+          >No Image</span
+        >
       </a>
       <div class="flex flex-col gap-2">
         <span class="text-gray-400 text-sm">期日:{{ value.date }}</span>

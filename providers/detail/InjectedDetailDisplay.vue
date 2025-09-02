@@ -27,7 +27,9 @@
               loading="lazy"
               class="w-full h-full object-cover object-center"
             />
-            <span v-else class="flex items-center justify-center h-full">No Image</span>
+            <span v-else class="flex items-center justify-center h-full"
+              >No Image</span
+            >
           </div>
           <div>
             <div

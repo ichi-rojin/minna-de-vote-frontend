@@ -31,7 +31,9 @@
               alt="Photo by Austin Wade"
               class="w-full h-full object-cover object-center group-hover:scale-110 transition duration-200"
             />
-            <span v-else class="flex items-center justify-center h-full">No Image</span>
+            <span v-else class="flex items-center justify-center h-full"
+              >No Image</span
+            >
           </a>
           <div class="flex flex-col">
             <span class="text-gray-500">{{ value.copy }}</span>
